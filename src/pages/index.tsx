@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import Component from '@/components/Component'
 
 
 
@@ -14,7 +15,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-
+        <Component></Component>
       </main>
     </>
   )
