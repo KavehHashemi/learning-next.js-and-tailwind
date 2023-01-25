@@ -28,7 +28,7 @@ const MyComponent = () => {
   useEffect(() => {
     (async () => {
       let res: unknown = await request(
-        "https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&hasImages=true&medium=Paintings&q=%22%22"
+        "https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&hasImages=true&medium=Paintings&q=%22q%22"
       );
       let data = res as TIds;
       setArtworkIds(data.objectIDs);

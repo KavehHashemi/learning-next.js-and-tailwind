@@ -12,18 +12,17 @@ const ArtworksList = ({ list }: ListProps) => {
   useEffect(() => {
     (async () => {
       let promises = list.map(async (id) => {
-        let a: unknown = await request(
+        let res: unknown = await request(
           `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
         );
-        let b = a as TArtwork;
-        return b;
+        let data = res as TArtwork;
+        return data;
       });
       let results = await Promise.all(promises);
       setArtworks(results);
     })();
   }, [list]);
 
-  if (artworks.length > 0) console.log(artworks);
   artworks.map((artwork) => {
     artworkObjects.push(
       <Artwork
@@ -34,7 +33,7 @@ const ArtworksList = ({ list }: ListProps) => {
   });
 
   return (
-    <div className="flex flex-wrap justify-between gap-5">{artworkObjects}</div>
+    <div className="flex flex-wrap justify-evenly gap-5">{artworkObjects}</div>
   );
 };
 

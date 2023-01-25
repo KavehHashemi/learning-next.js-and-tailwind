@@ -9,7 +9,7 @@
     /* height: fit-content; */
 }
 .card:hover{
-    border:1px solid #707070;
+    border:1px solid #646464;
     box-shadow: 0 0 50px -12px #646464;
     transition-duration: 0.5s;
 }
