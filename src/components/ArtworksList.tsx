@@ -25,8 +25,12 @@ const ArtworksList = ({ list }: ListProps) => {
 
   if (artworks.length > 0) console.log(artworks);
   artworks.map((artwork) => {
-    artworkObjects.push(<Artwork artwork={artwork}></Artwork>);
-    console.log(artworkObjects.length);
+    artworkObjects.push(
+      <Artwork
+        key={Math.floor(Math.random() * 100000)}
+        artwork={artwork}
+      ></Artwork>
+    );
   });
 
   return (

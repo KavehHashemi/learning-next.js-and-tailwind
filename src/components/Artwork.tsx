@@ -10,7 +10,6 @@ const Artwork = ({ artwork }: ArtworkProps) => {
   const [title, setTitle] = useState<string>(artwork.title);
 
   useEffect(() => {
-    console.log(artwork.title);
     setTitle(artwork.title);
   }, [artwork]);
 
