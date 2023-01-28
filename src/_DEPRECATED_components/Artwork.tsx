@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import styles from '../styles/Artwork.module.css';
-import { Artwork } from '../types';
+import { TArtwork } from './MyComponent';
 
 type ArtworkProps = {
-  artwork: Artwork;
+  artwork: TArtwork;
 };
-const SingleArtwork = ({ artwork }: ArtworkProps) => {
+const Artwork = ({ artwork }: ArtworkProps) => {
   const [URL, setURL] = useState<string>(artwork.title);
 
   useEffect(() => {
@@ -34,4 +34,4 @@ const SingleArtwork = ({ artwork }: ArtworkProps) => {
   return null;
 };
 
-export default SingleArtwork;
+export default Artwork;

@@ -1,7 +1,10 @@
-import MyComponent from '@/components/MyComponent';
+import MainContainer from '@/components/MainContainer';
 import Head from 'next/head';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 export default function Home() {
+  const queryClient = new QueryClient();
+
   return (
     <>
       <Head>
@@ -12,7 +15,9 @@ export default function Home() {
       </Head>
 
       <main>
-        <MyComponent></MyComponent>
+        <QueryClientProvider client={queryClient}>
+          <MainContainer></MainContainer>
+        </QueryClientProvider>
       </main>
     </>
   );

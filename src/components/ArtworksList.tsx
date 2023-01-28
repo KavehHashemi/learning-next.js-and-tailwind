@@ -1,40 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import { fetchArtwork } from '@/hooks';
+import { idsDB } from '@/indexedDB/ArtworksDB';
+import { Artwork } from '@/types';
+import { useEffect, useState } from 'react';
 
-import Artwork from './Artwork';
-import { request, TArtwork } from './MyComponent';
+import SingleArtwork from './Artwork';
 
-type ListProps = {
-  list: string[];
-};
-const ArtworksList = ({ list }: ListProps) => {
-  const [artworks, setArtworks] = useState<TArtwork[]>([]);
-  let artworkObjects: JSX.Element[] = [];
+const ArtworksList = () => {
+  const [data, setData] = useState<Artwork[]>([]);
+  let pack: number[] = [];
   useEffect(() => {
     (async () => {
-      let promises = list.map(async (id) => {
-        let res: unknown = await request(
-          `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
-        );
-        let data = res as TArtwork;
-        return data;
-      });
-      let results = await Promise.all(promises);
-      setArtworks(results);
+      let ids = await idsDB.ids.get(1);
+      for (let i = 0; i < 6; i++) {
+        if (ids !== undefined) {
+          let a = ids.objectIDs[i];
+          if (!pack.includes(a)) pack.push(a);
+        }
+      }
+      await get();
     })();
-  }, [list]);
+  }, []);
 
-  artworks.map((artwork) => {
-    artworkObjects.push(
-      <Artwork
-        key={Math.floor(Math.random() * 100000)}
-        artwork={artwork}
-      ></Artwork>
-    );
-  });
+  //let data: unknown[] = [];
+  let artworkObjects: JSX.Element[] = [];
+  const get = async () => {
+    for (let i = 0; i < pack.length; i++) {
+      let x = await fetchArtwork(pack[i].toString());
+      setData([...data, x]);
+      //data.push(x);
+    }
+    // console.log(data);
+  };
 
-  return (
-    <div className="flex flex-wrap justify-evenly gap-5">{artworkObjects}</div>
-  );
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      data.map((d) => {
+        artworkObjects.push(
+          <SingleArtwork key={d.objectID} artwork={d}></SingleArtwork>
+        );
+      });
+    }
+  }, [artworkObjects, data]);
+
+  return <div>{artworkObjects}</div>;
 };
 
 export default ArtworksList;
