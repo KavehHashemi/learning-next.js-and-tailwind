@@ -2,8 +2,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-import ArtworksList from './ArtworksList';
-
 export type TArtwork = {
   objectID: number;
   title: string;
@@ -34,25 +32,25 @@ export async function request<TArtwork>(
 }
 
 const MyComponent = () => {
-  const [artworkIds, setArtworkIds] = useState<string[]>([]);
+  // const [artworkIds, setArtworkIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      let res: unknown = await request(
-        "https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&hasImages=true&medium=Paintings&q=%22K%22"
-      );
-      let data = res as TIds;
-      setArtworkIds(data.objectIDs);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let res: unknown = await request(
+  //       "https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&hasImages=true&medium=Paintings&q=%22K%22"
+  //     );
+  //     let data = res as TIds;
+  //     setArtworkIds(data.objectIDs);
+  //   })();
+  // }, []);
 
-  useEffect(() => {
-    console.log(artworkIds.length);
-  }, [artworkIds]);
+  // useEffect(() => {
+  //   console.log(artworkIds.length);
+  // }, [artworkIds]);
 
   return (
     <div className="p-10">
-      <ArtworksList list={artworkIds}></ArtworksList>
+      {/* <ArtworksList list={artworkIds}></ArtworksList> */}
     </div>
   );
 };

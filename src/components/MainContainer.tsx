@@ -19,9 +19,11 @@ const MainContainer = () => {
   if (status === "loading") return <>Loading...</>;
   if (status === "success")
     return (
-      <div className="p-4">
-        {data.total}
-        <ArtworksList></ArtworksList>
+      <div>
+        {status}-{data.total}
+        <div className="flex justify-evenly p-4">
+          <ArtworksList></ArtworksList>
+        </div>
       </div>
     );
   if (status === "error") return <>{error.message}</>;
