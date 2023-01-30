@@ -31,7 +31,7 @@ const SingleArtwork = ({ artwork }: ArtworkProps) => {
         </div>
       </div>
     );
-  return null;
+  return <></>;
 };
 
 export default SingleArtwork;

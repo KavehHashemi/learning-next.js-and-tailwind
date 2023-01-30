@@ -19,10 +19,10 @@ const MainContainer = () => {
   if (status === "loading") return <>Loading...</>;
   if (status === "success")
     return (
-      <>
+      <div className="p-4">
         {data.total}
         <ArtworksList></ArtworksList>
-      </>
+      </div>
     );
   if (status === "error") return <>{error.message}</>;
   if (status === "idle") return <>{status}</>;

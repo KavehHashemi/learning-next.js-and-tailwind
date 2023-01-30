@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import SingleArtwork from './Artwork';
 
 const ArtworksList = () => {
-  const [data, setData] = useState<Artwork[]>([]);
+  const [artworks, setArtworks] = useState<JSX.Element[]>([]);
   let pack: number[] = [];
   useEffect(() => {
     (async () => {
@@ -21,29 +21,22 @@ const ArtworksList = () => {
     })();
   }, []);
 
-  //let data: unknown[] = [];
+  let data: Artwork[] = [];
   let artworkObjects: JSX.Element[] = [];
   const get = async () => {
     for (let i = 0; i < pack.length; i++) {
       let x = await fetchArtwork(pack[i].toString());
-      setData([...data, x]);
-      //data.push(x);
+      if (!data.includes(x)) data.push(x);
     }
-    // console.log(data);
+    data.map((d) => {
+      artworkObjects.push(
+        <SingleArtwork key={d.objectID} artwork={d}></SingleArtwork>
+      );
+    });
+    setArtworks(artworkObjects);
   };
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      data.map((d) => {
-        artworkObjects.push(
-          <SingleArtwork key={d.objectID} artwork={d}></SingleArtwork>
-        );
-      });
-    }
-  }, [artworkObjects, data]);
-
-  return <div>{artworkObjects}</div>;
+  return <div className="flex justify-evenly gap-4">{artworks}</div>;
 };
 
 export default ArtworksList;
