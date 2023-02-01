@@ -1,67 +1,48 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useCollection } from '@/hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { getCollection } from '@/hooks';
+import { useEffect, useState } from 'react';
 
 import SingleArtwork from './Artwork';
 
+// import { BottomScrollListener } from 'react-bottom-scroll-listener';
+
 const ArtworksList = () => {
+  const [index, setIndex] = useState<number>(0);
   const [artworks, setArtworks] = useState<JSX.Element[]>([]);
-  const [index, setIndex] = useState(0);
-  const collection = useCollection(index);
-  // const collection = useMemo(() => Refetch, [index]);
-
-  // let artworkObjects: JSX.Element[] = [];
-  const artworkObjects: JSX.Element[] = useMemo(() => {
-    return [];
-  }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", trackScrolling);
-  });
-
-  const isBottom = (el: HTMLElement) => {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
-  };
-  const trackScrolling = () => {
-    const wrappedElement = document.getElementById("main-container");
-    if (wrappedElement)
-      if (isBottom(wrappedElement)) {
-        console.log("bottom reached");
-        setIndex(index + 1);
-        document.removeEventListener("scroll", trackScrolling);
-      }
-  };
-
-  // const Refetch = () => {
-  //   //console.log("refetch");
-  //   useCollection(index);
-  // };
-
-  // useEffect(() => {
-  //   Refetch();
-  // }, [index]);
-
-  useEffect(() => {
+    console.log(index);
+    let artworkObjects: JSX.Element[] = [];
     (async () => {
-      let a = await collection;
+      let a = await getCollection(index);
+
+      console.log(`collection : ${a}`);
+
       a.map((d) => {
         artworkObjects.push(
           <SingleArtwork key={d.objectID} artwork={d}></SingleArtwork>
         );
       });
       setArtworks(artworkObjects);
-      // setIndex(index + 1);
     })();
-  }, [collection]);
+  }, [index]);
 
   return (
-    <div
-      id="main-container"
-      className="flex flex-wrap justify-center gap-y-10 gap-x-6"
-      onScroll={trackScrolling}
-    >
-      {artworks}
-    </div>
+    <>
+      <div
+        id="main-container"
+        className="flex flex-wrap justify-center gap-y-10 gap-x-6"
+      >
+        {artworks}
+        <button
+          onClick={() => {
+            if (index) setIndex(index + 1);
+          }}
+        >
+          next
+        </button>
+      </div>
+      {/* <BottomScrollListener onBottom={() => setIndex(index + 1)} /> */}
+    </>
   );
 };
 

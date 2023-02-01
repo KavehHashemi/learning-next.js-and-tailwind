@@ -23,7 +23,7 @@ const SingleArtwork = ({ artwork }: ArtworkProps) => {
           <div>{artwork.title}</div>
         </div>
         <div className={styles.content}>
-          <img src={artwork.primaryImageSmall} alt="" onClick={showURL}></img>
+          {/* <img src={artwork.primaryImageSmall} alt="" onClick={showURL}></img> */}
         </div>
         <div className={styles.footer}>
           <div>{artwork.artistDisplayName}</div>

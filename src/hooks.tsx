@@ -11,7 +11,7 @@ export const useArtworks = () => {
 
 const fetchArtworks = async (): Promise<IDs> => {
   const { data } = await axios.get(
-    "https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&hasImages=true&medium=Paintings&q=%22%22"
+    "https://collectionapi.metmuseum.org/public/collection/v1/search?isHighlight=true&isPublicDomain=true&hasImages=true&medium=Paintings&q=%22%22"
   );
   return data as IDs;
 };
@@ -32,7 +32,7 @@ export const fetchArtwork = async (id: number): Promise<Artwork> => {
 
 const N = 6;
 
-export const useCollection = async (idx: number) => {
+export const getCollection = async (idx: number) => {
   let pack: number[] = [];
   let index = idx * N;
   let ids = await idsDB.ids.get(1);
@@ -46,9 +46,8 @@ export const useCollection = async (idx: number) => {
 const getNIds = (array: number[], index: number): number[] => {
   let pack: number[] = [];
   let m: number = N;
-  console.log("from " + index + " to " + (index + m));
   if (index + N > array.length) {
-    m = array.length - index + 1;
+    m = array.length - index;
   }
   for (let i = index; i < index + m; i++) {
     pack.push(array[i]);
